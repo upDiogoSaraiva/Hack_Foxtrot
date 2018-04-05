@@ -20,15 +20,26 @@ public class Player extends Entity {
 
     @Override
     public void update(float deltaTime, float gravity) {
+
+        jumps(deltaTime);
+
+        super.update(deltaTime, gravity);
+
+        move(deltaTime);
+
+    }
+
+    private void jumps(float deltaTime) {
+
         if (Gdx.input.isKeyPressed(Input.Keys.SPACE) && grounded) {
             this.velocityY += JUMP_VELOCITY * getWeight();
 
         } else if (Gdx.input.isKeyPressed(Input.Keys.SPACE) && !grounded && velocityY > 0) {
             this.velocityY += JUMP_VELOCITY * getWeight() * deltaTime;
         }
+    }
 
-        super.update(deltaTime, gravity);
-
+    private void move(float deltaTime) {
         if (Gdx.input.isKeyPressed(Input.Keys.LEFT)) {
             moveX(-SPEED * deltaTime);
         }
