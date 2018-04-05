@@ -6,13 +6,13 @@ import java.util.Map;
 public enum TileType {
 
     GRASS (1, true, "Grass"),
-    DIRT (2, true, "Dirt"),
+    DIRT (2, false, "Dirt"),
     SKY (3, false, "Sky"),
     LAVA (4, false, "Lava"),
     CLOUD (5, true, "Cloud"),
-    STONE (6, true, "Stone");
+    STONE (6, false, "Stone");
 
-    public static final int TILE_SIZE = 16;
+    public static final int TILE_SIZE = 32;
 
     private int id;
     private boolean collidable;
