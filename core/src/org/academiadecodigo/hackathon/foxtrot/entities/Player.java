@@ -4,7 +4,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import org.academiadecodigo.hackathon.foxtrot.Game;
+import org.academiadecodigo.hackathon.foxtrot.GameMap;
 
 public class Player extends Entity {
 
@@ -13,7 +13,7 @@ public class Player extends Entity {
 
     private Texture image;
 
-    public Player(float x, float y, Game game) {
+    public Player(float x, float y, GameMap map) {
         super(x, y, EntityType.PLAYER, map);
         image = new Texture("player.png");
     }
@@ -40,8 +40,8 @@ public class Player extends Entity {
 
     @Override
     public void render(SpriteBatch batch) {
-        public void render (SpriteBatch batch){
-            batch.draw(image, pos.x, pos.y, getWidth(), getHeight());
-        }
+        batch.draw(image, pos.x, pos.y, getWidth(), getHeight());
     }
 }
+
+
