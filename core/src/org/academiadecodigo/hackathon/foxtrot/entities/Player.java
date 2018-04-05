@@ -1,4 +1,4 @@
 package org.academiadecodigo.hackathon.foxtrot.entities;
 
-public class Player {
+public class Player extends Entity {
 }
