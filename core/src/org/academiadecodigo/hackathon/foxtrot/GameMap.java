@@ -2,7 +2,6 @@ package org.academiadecodigo.hackathon.foxtrot;
 
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import org.academiadecodigo.hackathon.foxtrot.TileType;
 import org.academiadecodigo.hackathon.foxtrot.entities.Entity;
 import org.academiadecodigo.hackathon.foxtrot.entities.Player;
 
@@ -12,14 +11,18 @@ import java.util.List;
 public abstract class GameMap {
 
     private static final float GRAVITY = -9.8f;
+    private Player player;
 
     protected List<Entity> entities;
 
     public GameMap() {
 
         this.entities = new ArrayList<Entity>();
-        entities.add(new Player(40, 600, this));
+        player = new Player(40, 600, this);
+        entities.add(player);
     }
+
+
 
     public void render(OrthographicCamera camera, SpriteBatch batch) {
 
@@ -36,12 +39,6 @@ public abstract class GameMap {
     }
 
     public abstract void dispose();
-
-
-    public TileType getTileTypeByLocation(int layer, float x, float y) {
-        return getTileTypeByCoordinate(layer, (int) (x / TileType.TILE_SIZE), (int) (y / TileType.TILE_SIZE));
-    }
-
 
     public abstract TileType getTileTypeByCoordinate(int layer, int col, int row);
 
@@ -79,5 +76,10 @@ public abstract class GameMap {
 
     public int getPixelHeight() {
         return this.getHeight() * TileType.TILE_SIZE;
+
+    }
+
+    public Player getPlayer() {
+        return player;
     }
 }

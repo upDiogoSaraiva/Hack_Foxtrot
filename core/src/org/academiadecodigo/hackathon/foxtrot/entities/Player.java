@@ -8,7 +8,8 @@ import org.academiadecodigo.hackathon.foxtrot.GameMap;
 
 public class Player extends Entity {
 
-    private static final int SPEED = 80;
+    //if translate (2,0) 120 is the same speed as the map
+    private static final int SPEED = 190;
     private static final int JUMP_VELOCITY = 5;
 
     private Texture image;
@@ -20,7 +21,6 @@ public class Player extends Entity {
 
     @Override
     public void update(float deltaTime, float gravity) {
-
         jumps(deltaTime);
 
         super.update(deltaTime, gravity);

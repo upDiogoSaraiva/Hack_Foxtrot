@@ -20,6 +20,7 @@ public abstract class Entity {
 
     }
     public void update(float deltaTime, float gravity) {
+        System.out.println(getX());
 
         float newY = pos.y;
 
@@ -52,6 +53,7 @@ public abstract class Entity {
         if (!map.doesRectCollideWithMap(newX, pos.y, getWidth(), getHeight())) {
             this.pos.x = newX;
         }
+
     }
 
     public Vector2 getPos() {
