@@ -25,6 +25,9 @@ public class TiledGameMap extends GameMap {
         tiledMapRenderer.setView(camera);
         tiledMapRenderer.render();
 
+        camera.translate(1,0);
+        camera.update();
+
 
         batch.setProjectionMatrix(camera.combined);
         batch.begin();
