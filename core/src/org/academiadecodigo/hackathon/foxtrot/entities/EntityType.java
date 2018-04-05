@@ -2,7 +2,7 @@ package org.academiadecodigo.hackathon.foxtrot.entities;
 
 public enum EntityType {
 
-    PLAYER("player", 14, 32, 40);
+    PLAYER("player", 31, 64, 40);
 
     private String id;
     private int width;
