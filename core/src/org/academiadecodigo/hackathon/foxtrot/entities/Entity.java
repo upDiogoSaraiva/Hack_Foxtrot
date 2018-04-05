@@ -35,16 +35,19 @@ public abstract class Entity {
         this.velocityY += gravity * deltaTime * getWeight();
         newY += this.velocityY * deltaTime;
 
+        checkCollision(newY);
+
+    }
+
+    private void checkCollision(float newY) {
+
         if (map.doesRectCollideWithMap(pos.x, newY, getWidth(), getHeight())) {
 
             if (velocityY < 0) {
-
                 this.pos.y = (float) Math.floor(pos.y);
                 grounded = true;
             }
-
             this.velocityY = 0;
-
         } else {
 
             this.pos.y = newY;
