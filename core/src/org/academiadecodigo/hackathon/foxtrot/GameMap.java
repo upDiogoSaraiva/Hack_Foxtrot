@@ -4,6 +4,7 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import org.academiadecodigo.hackathon.foxtrot.TileType;
 import org.academiadecodigo.hackathon.foxtrot.entities.Entity;
+import org.academiadecodigo.hackathon.foxtrot.entities.EntityType;
 import org.academiadecodigo.hackathon.foxtrot.entities.Player;
 
 import java.util.ArrayList;
@@ -18,7 +19,7 @@ public abstract class GameMap {
     public GameMap() {
 
         this.entities = new ArrayList<Entity>();
-        entities.add(new Player(40, 600, this));
+        entities.add(new Player(50, 600, this));
     }
 
     public void render(OrthographicCamera camera, SpriteBatch batch) {
@@ -37,6 +38,17 @@ public abstract class GameMap {
 
     public abstract void dispose();
 
+    public void endGame() {
+
+        Entity entity = entities.get(0);
+
+        if (entity.getType().equals(EntityType.PLAYER)) {
+
+            if (entity.isDead()) {
+                System.exit(0); //TODO GAME OVER return to menu
+            }
+        }
+    }
 
     public TileType getTileTypeByLocation(int layer, float x, float y) {
         return getTileTypeByCoordinate(layer, (int) (x / TileType.TILE_SIZE), (int) (y / TileType.TILE_SIZE));
@@ -66,6 +78,8 @@ public abstract class GameMap {
 
         return false;
     }
+
+
 
     public abstract int getWidth();
 

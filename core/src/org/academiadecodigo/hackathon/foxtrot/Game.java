@@ -38,6 +38,8 @@ public class Game extends ApplicationAdapter {
         camera.update();
         gameMap.update(Gdx.graphics.getDeltaTime());
         gameMap.render(camera, batch);
+
+        gameMap.endGame();
     }
 
     @Override
@@ -46,4 +48,5 @@ public class Game extends ApplicationAdapter {
         batch.dispose();
         gameMap.dispose();
     }
+
 }

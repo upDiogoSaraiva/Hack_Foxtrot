@@ -5,26 +5,22 @@ import java.util.Map;
 
 public enum TileType {
 
-    GRASS (1, true, "Grass"),
-    DIRT (2, true, "Dirt"),
-    SKY (3, false, "Sky"),
-    LAVA (4, false, "Lava"),
-    CLOUD (5, true, "Cloud"),
-    STONE (6, true, "Stone");
+    GRASS(1, true, "Grass", false),
+    DIRT(2, true, "Dirt", false),
+    SKY(3, false, "Sky", false),
+    LAVA(4, false, "Lava", true),
+    CLOUD(5, true, "Cloud", false),
+    STONE(6, true, "Stone", false);
 
     public static final int TILE_SIZE = 16;
 
     private int id;
     private boolean collidable;
     private String name;
-    private float damage;
+    private boolean damage;
     private static Map<Integer, TileType> tileMap;
 
-    TileType (int id, boolean collidable, String name) {
-        this(id, collidable, name, 0);
-    }
-
-    TileType (int id, boolean collidable, String name, float damage) {
+    TileType(int id, boolean collidable, String name, boolean damage) {
 
         this.id = id;
         this.collidable = collidable;
@@ -40,11 +36,7 @@ public enum TileType {
         return collidable;
     }
 
-    public String getName() {
-        return name;
-    }
-
-    public float getDamage() {
+    public boolean getDamage() {
         return damage;
     }
 
@@ -52,12 +44,12 @@ public enum TileType {
 
         tileMap = new HashMap<Integer, TileType>();
 
-        for (TileType tileType: TileType.values()) {
+        for (TileType tileType : TileType.values()) {
             tileMap.put(tileType.getId(), tileType);
         }
     }
 
-    public static TileType getTileTypeById (int id) {
+    public static TileType getTileTypeById(int id) {
         return tileMap.get(id);
     }
 }
