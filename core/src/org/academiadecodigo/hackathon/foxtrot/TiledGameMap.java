@@ -28,7 +28,10 @@ public class TiledGameMap extends GameMap {
             tiledMap = null;
             System.out.println("hello world");
             loadMap(2);
+
+
         }
+
 
         tiledMapRenderer.setView(camera);
         tiledMapRenderer.render();
