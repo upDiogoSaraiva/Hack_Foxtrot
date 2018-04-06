@@ -100,6 +100,8 @@ public class GameOverScreen implements MenuScreen {
 
         stage.act(delta);
         stage.draw();
+
+        TiledGameMap.score = 0;
     }
 
     @Override
@@ -124,6 +126,5 @@ public class GameOverScreen implements MenuScreen {
 
     @Override
     public void dispose() {
-
     }
 }

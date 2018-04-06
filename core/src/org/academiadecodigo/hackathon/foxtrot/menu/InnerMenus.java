@@ -2,6 +2,7 @@ package org.academiadecodigo.hackathon.foxtrot.menu;
 
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.backends.lwjgl.LwjglApplicationConfiguration;
+import org.academiadecodigo.hackathon.foxtrot.TiledGameMap;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -42,7 +43,6 @@ public class InnerMenus extends Game {
     @Override
     public void render() {
         super.render();
-
     }
 
     @Override

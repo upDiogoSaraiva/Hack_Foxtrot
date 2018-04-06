@@ -1,6 +1,8 @@
 package org.academiadecodigo.hackathon.foxtrot;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TiledMapTile;
@@ -17,16 +19,22 @@ public class TiledGameMap extends GameMap {
     private boolean firstMap = true;
     public static int score;
 
+    private SpriteBatch textBatch;
+    private BitmapFont font;
+    private String myText;
+
     public TiledGameMap(InnerMenus innerMenus) {
         super(innerMenus);
 
         loadMap(1);
 
-
+        textBatch = new SpriteBatch();
+        font = new BitmapFont(Gdx.files.internal("arial.fnt"));
     }
 
     @Override
     public void render(OrthographicCamera camera, SpriteBatch batch) {
+
         this.camera = camera;
 
         if (getPlayer().getX() > 2600 && firstMap) {
@@ -43,10 +51,8 @@ public class TiledGameMap extends GameMap {
             getPlayer().setY(352);
             firstMap = false;
 
-
             getPlayer().setCanMove(true);
         }
-
 
         tiledMapRenderer.setView(camera);
         tiledMapRenderer.render();
@@ -62,6 +68,13 @@ public class TiledGameMap extends GameMap {
         batch.end();
         score++;
 
+        int points = TiledGameMap.score;
+
+        myText = Integer.toString(points);
+
+        textBatch.begin();
+        font.draw(textBatch, myText, 900, 620);
+        textBatch.end();
     }
 
     @Override
@@ -93,8 +106,6 @@ public class TiledGameMap extends GameMap {
 
         tiledMap = new TmxMapLoader().load("map" + map + ".tmx");
         tiledMapRenderer = new OrthogonalTiledMapRenderer(tiledMap);
-
-
     }
 
     @Override
