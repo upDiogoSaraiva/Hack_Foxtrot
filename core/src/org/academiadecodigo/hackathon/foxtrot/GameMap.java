@@ -58,8 +58,6 @@ public abstract class GameMap {
         }
     }
 
-    public abstract void dispose();
-
     public void endGame() {
 
         player = (Player) entities.get(1);
@@ -68,9 +66,7 @@ public abstract class GameMap {
         if (player.getType().equals(EntityType.PLAYER)) {
 
             if ((player.getX() <= entities.get(0).getX()) || player.isDead()) {
-               // Gdx.app.exit(); //TODO GAME OVER return to menu
                 innerMenus.setScreen(ScreenTypes.MENU);
-                //menu.show();
             }
         }
     }

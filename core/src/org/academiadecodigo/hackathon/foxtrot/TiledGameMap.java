@@ -77,11 +77,6 @@ public class TiledGameMap extends GameMap {
     }
 
     @Override
-    public void dispose() {
-        tiledMap.dispose();
-    }
-
-    @Override
     public TileType getTileTypeByCoordinate(int layer, int col, int row) {
 
         TiledMapTileLayer.Cell cell = ((TiledMapTileLayer) tiledMap.getLayers().get(layer)).getCell(col, row);

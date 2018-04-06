@@ -13,7 +13,5 @@ public class DesktopLauncher {
 		config.resizable = false;
 
 		new LwjglApplication(new InnerMenus(config), config);
-		//new LwjglApplication(new Game(), config);
-
 	}
 }
