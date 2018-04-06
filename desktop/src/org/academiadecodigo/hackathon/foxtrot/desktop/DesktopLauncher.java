@@ -1,11 +1,8 @@
 package org.academiadecodigo.hackathon.foxtrot.desktop;
 
-import com.badlogic.gdx.ApplicationListener;
 import com.badlogic.gdx.backends.lwjgl.LwjglApplication;
 import com.badlogic.gdx.backends.lwjgl.LwjglApplicationConfiguration;
-import org.academiadecodigo.hackathon.foxtrot.Game;
 import org.academiadecodigo.hackathon.foxtrot.menu.InnerMenus;
-import org.academiadecodigo.hackathon.foxtrot.menu.Menu;
 
 public class DesktopLauncher {
 	public static void main (String[] arg) {

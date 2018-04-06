@@ -8,9 +8,8 @@ import org.academiadecodigo.hackathon.foxtrot.GameMap;
 import org.academiadecodigo.hackathon.foxtrot.TileType;
 
 public class Player extends Entity {
-
-    //if translate (2,0) 120 is the same speed as the map
-    private static final int SPEED = 190;
+    
+    private static final int SPEED = 150;
     private static final int JUMP_VELOCITY = 5;
     private boolean canMove = true;
 

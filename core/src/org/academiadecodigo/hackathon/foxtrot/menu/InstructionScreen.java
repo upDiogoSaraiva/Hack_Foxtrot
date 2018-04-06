@@ -42,7 +42,6 @@ public class InstructionScreen implements MenuScreen {
         viewport.apply(true);
 
         stage = new Stage(viewport, batch);
-        System.out.println("here 2");
         show();
     }
 

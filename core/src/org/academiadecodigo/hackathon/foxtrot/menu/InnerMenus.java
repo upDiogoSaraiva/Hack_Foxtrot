@@ -1,6 +1,5 @@
 package org.academiadecodigo.hackathon.foxtrot.menu;
 
-
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.backends.lwjgl.LwjglApplicationConfiguration;
 
