@@ -69,7 +69,7 @@ public abstract class GameMap {
 
             if ((player.getX() <= entities.get(0).getX()) || player.isDead()) {
 
-                gameOverScreen.init();
+                innerMenus.setScreen(ScreenTypes.GAMEOVER);
             }
         }
     }

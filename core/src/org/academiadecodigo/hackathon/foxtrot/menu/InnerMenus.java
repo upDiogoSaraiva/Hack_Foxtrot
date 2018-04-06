@@ -32,6 +32,8 @@ public class InnerMenus extends Game {
         screenMap.put(ScreenTypes.MENU,screen);
         screenMap.put(ScreenTypes.INSTRUCTION,screen2);
         screenMap.put(ScreenTypes.GAME, game);
+        screenMap.put(ScreenTypes.GAMEOVER, gameover);
+
         super.setScreen(screen);
     }
 

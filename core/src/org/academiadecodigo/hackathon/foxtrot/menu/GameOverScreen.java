@@ -1,49 +1,89 @@
 package org.academiadecodigo.hackathon.foxtrot.menu;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Camera;
+import com.badlogic.gdx.graphics.GL20;
+import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.TextureAtlas;
+import com.badlogic.gdx.scenes.scene2d.InputEvent;
+import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.Skin;
+import com.badlogic.gdx.scenes.scene2d.ui.Table;
+import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
+import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
+import com.badlogic.gdx.utils.viewport.FitViewport;
+import com.badlogic.gdx.utils.viewport.Viewport;
 
 public class GameOverScreen implements MenuScreen {
 
-    private SpriteBatch batch;
-    private Texture image;
-
     private InnerMenus innerMenus;
+    private SpriteBatch batch;
+    private Stage stage;
+    private Skin skin;
+    private TextureAtlas atlas;
+    private Texture image;
+    private SpriteBatch pictureBatch;
 
     public GameOverScreen(InnerMenus innerMenus) {
         this.innerMenus = innerMenus;
+        init();
     }
 
     @Override
     public void init() {
 
+        batch = new SpriteBatch();
+        atlas = new TextureAtlas("uiskin.atlas");
+        skin = new Skin(Gdx.files.internal("uiskin.json"));
+        Camera camera = new OrthographicCamera();
+        Viewport viewport = new FitViewport(Gdx.graphics.getWidth(),
+                Gdx.graphics.getHeight(), camera);
+        viewport.apply(true);
+
+        stage = new Stage(viewport, batch);
         show();
     }
 
     @Override
     public void show() {
 
-        batch = new SpriteBatch();
+        Gdx.input.setInputProcessor(stage);
+        TextButton menu = new TextButton("PlayBack", skin);
+
         image = new Texture(Gdx.files.internal("GameOver.png"));
+        batch = new SpriteBatch();
 
-        batch.begin();
-        batch.draw(image, 0, 0);
-        batch.end();
+        Table table = new Table(skin);
 
-        try {
-            Thread.sleep(5000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
+        table.setFillParent(true);
 
-        innerMenus.setScreen(ScreenTypes.MENU);
+        table.padBottom(-400);
+        table.add(menu);
+        table.row().pad(10);
+
+        stage.addActor(table);
+
+        menu.addListener(new ClickListener() {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                innerMenus.setScreen(ScreenTypes.MENU);
+            }
+        });
+        
     }
 
     @Override
     public void render(float delta) {
+        Gdx.gl.glClearColor(.1f, .12f, .16f, 1);
+        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
-
+        batch.begin();
+        batch.draw(image, 0, 0);
+        batch.end();
+        stage.act(delta);
+        stage.draw();
     }
 
     @Override
