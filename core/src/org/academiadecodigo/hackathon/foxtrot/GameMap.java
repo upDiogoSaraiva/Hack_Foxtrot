@@ -4,6 +4,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import org.academiadecodigo.hackathon.foxtrot.TileType;
+import org.academiadecodigo.hackathon.foxtrot.entities.Coffin;
 import org.academiadecodigo.hackathon.foxtrot.entities.Entity;
 import org.academiadecodigo.hackathon.foxtrot.entities.EntityType;
 import org.academiadecodigo.hackathon.foxtrot.entities.Player;
@@ -20,6 +21,7 @@ public abstract class GameMap {
     public GameMap() {
 
         this.entities = new ArrayList<Entity>();
+        entities.add(new Coffin(0, 600, this));
         entities.add(new Player(50, 600, this));
     }
 
@@ -41,7 +43,7 @@ public abstract class GameMap {
 
     public void endGame() {
 
-        Entity entity = entities.get(0);
+        Entity entity = entities.get(1);
 
         if (entity.getType().equals(EntityType.PLAYER)) {
 
@@ -58,7 +60,7 @@ public abstract class GameMap {
 
     public abstract TileType getTileTypeByCoordinate(int layer, int col, int row);
 
-    public boolean doesRectCollideWithMap(float x, float y, int width, int height) {
+    public boolean doesRectCollideWithMap(float x, float y, int width, int height, boolean isCoffin) {
 
         if (x < 0 || y < 0 || x + width > getPixelWidth() || y + height > getPixelHeight()) {
             return true;
@@ -71,7 +73,7 @@ public abstract class GameMap {
                     TileType type = getTileTypeByCoordinate(layer, col, row);
 
                     if (type != null && type.isCollidable()) {
-                        return true;
+                        return !isCoffin;
                     }
                 }
             }
