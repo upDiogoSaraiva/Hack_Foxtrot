@@ -1,12 +1,12 @@
 package org.academiadecodigo.hackathon.foxtrot;
 
-import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import org.academiadecodigo.hackathon.foxtrot.menu.MenuScreen;
 
-public class Game extends ApplicationAdapter {
+public class Game implements MenuScreen {
 
     private OrthographicCamera camera;
     private SpriteBatch batch;
@@ -14,7 +14,8 @@ public class Game extends ApplicationAdapter {
     private GameMap gameMap;
 
     @Override
-    public void create() {
+    public void show() {
+
 
         batch = new SpriteBatch();
 
@@ -28,7 +29,7 @@ public class Game extends ApplicationAdapter {
     }
 
     @Override
-    public void render() {
+    public void render(float delta) {
 
         Gdx.gl.glClearColor(0, 0, 0, 1);
         Gdx.gl.glBlendFunc(GL20.GL_SRC_ALPHA, GL20.GL_ONE_MINUS_SRC_ALPHA);
@@ -42,11 +43,30 @@ public class Game extends ApplicationAdapter {
     @Override
     public void dispose() {
 
-        batch.dispose();
-        gameMap.dispose();
     }
 
-    public void setNewGame () {
-        new Game();
+    @Override
+    public void resize(int width, int height) {
+
+    }
+
+    @Override
+    public void pause() {
+
+    }
+
+    @Override
+    public void resume() {
+
+    }
+
+    @Override
+    public void hide() {
+
+    }
+
+    @Override
+    public void init() {
+
     }
 }

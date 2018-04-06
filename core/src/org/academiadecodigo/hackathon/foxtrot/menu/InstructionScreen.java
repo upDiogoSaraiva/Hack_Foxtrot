@@ -5,6 +5,7 @@ import com.badlogic.gdx.graphics.*;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
@@ -23,9 +24,11 @@ public class InstructionScreen implements MenuScreen {
     private Stage stage;
     private Skin skin;
     private TextureAtlas atlas;
+    private Texture image;
 
     public InstructionScreen(InnerMenus innerMenus) {
         this.innerMenus = innerMenus;
+        image = new Texture("player.png");
     }
 
     @Override
@@ -48,11 +51,6 @@ public class InstructionScreen implements MenuScreen {
         Gdx.input.setInputProcessor(stage);
         TextButton menu = new TextButton("Menu", skin);
         TextButton exitButton = new TextButton("Exit", skin);
-
-        Texture texture = new Texture(Gdx.files.internal("tiles.png"));
-       // Pixmap pixmap = new Pixmap(100,100,"tiles.png");
-
-
 
 
        // texture = new Texture(pixmap);
@@ -93,6 +91,7 @@ public class InstructionScreen implements MenuScreen {
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         stage.act(delta);
         stage.draw();
+
     }
 
     @Override

@@ -2,9 +2,11 @@ package org.academiadecodigo.hackathon.foxtrot.menu;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.backends.lwjgl.LwjglApplication;
 import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
@@ -30,11 +32,12 @@ public class Menu implements MenuScreen {
 
     public Menu(InnerMenus innerMenus) {
         this.innerMenus = innerMenus;
+        game = new Game();
     }
 
     public void init() {
         batch = new SpriteBatch();
-
+        game = new Game();
         atlas = new TextureAtlas("uiskin.atlas");
         skin = new Skin(Gdx.files.internal("uiskin.json"));
         Camera camera = new OrthographicCamera();
@@ -50,15 +53,18 @@ public class Menu implements MenuScreen {
     public void show() {
         Gdx.input.setInputProcessor(stage);
 
-        TextButton startGame = new TextButton("Start Game", skin);
+        final TextButton startGame = new TextButton("Start Game", skin);
         TextButton instructionsButton = new TextButton("Instructions", skin);
         TextButton exitButton = new TextButton("Exit", skin);
 
         startGame.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-
+                //game.create();
                 //TODO add game page
+                innerMenus.setScreen(ScreenTypes.GAME);
+                game.show();
+
             }
         });
 
@@ -68,7 +74,7 @@ public class Menu implements MenuScreen {
 
                 //TODO add instructions page
                 innerMenus.setScreen(ScreenTypes.INSTRUCTION);
-             }
+            }
         });
 
         exitButton.addListener(new ClickListener() {
@@ -77,6 +83,8 @@ public class Menu implements MenuScreen {
                 Gdx.app.exit();
             }
         });
+
+
 
         Table table = new Table(skin);
 
@@ -100,6 +108,12 @@ public class Menu implements MenuScreen {
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         stage.act(delta);
         stage.draw();
+       // game.render(delta);
+
+
+
+
+
     }
 
     @Override
