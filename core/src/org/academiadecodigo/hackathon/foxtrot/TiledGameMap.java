@@ -1,6 +1,6 @@
 package org.academiadecodigo.hackathon.foxtrot;
 
-import com.badlogic.gdx.graphics.Camera;
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.maps.tiled.TiledMap;
@@ -8,13 +8,13 @@ import com.badlogic.gdx.maps.tiled.TiledMapTile;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
-import org.academiadecodigo.hackathon.foxtrot.entities.Entity;
 
 public class TiledGameMap extends GameMap {
 
     private TiledMap tiledMap;
     private OrthogonalTiledMapRenderer tiledMapRenderer;
     private OrthographicCamera camera;
+    private boolean firstMap = true;
 
     public TiledGameMap() {
         loadMap(1);
@@ -24,20 +24,34 @@ public class TiledGameMap extends GameMap {
     @Override
     public void render(OrthographicCamera camera, SpriteBatch batch) {
         this.camera = camera;
-        if(getPlayer().getX() > 1600){
+
+
+        if(getPlayer().getX() > 2600 && firstMap){
+
+            getPlayer().setCanMove(false);
             tiledMap = null;
             System.out.println("hello world");
             loadMap(2);
+            camera.position.x = 500;
+
+            camera.update();
+            getPlayer().setX(830);
+            getPlayer().setY(352);
+            firstMap = false;
 
 
+
+            getPlayer().setCanMove(true);
         }
 
 
         tiledMapRenderer.setView(camera);
         tiledMapRenderer.render();
 
-        camera.translate(2, 0);
-        camera.update();
+        if (camera.position.x < 2308) {
+            camera.translate(2, 0);
+            camera.update();
+        }
 
 
 

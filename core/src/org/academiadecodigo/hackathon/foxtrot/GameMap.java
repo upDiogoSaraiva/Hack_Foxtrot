@@ -79,6 +79,8 @@ public abstract class GameMap {
 
     }
 
+
+
     public Player getPlayer() {
         return player;
     }

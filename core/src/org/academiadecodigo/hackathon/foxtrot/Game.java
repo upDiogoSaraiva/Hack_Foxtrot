@@ -20,6 +20,7 @@ public class Game extends ApplicationAdapter {
 
         float w = Gdx.graphics.getWidth();
         float h = Gdx.graphics.getHeight();
+        System.out.println(w +"--"+ h);
 
         camera = new OrthographicCamera();
         camera.setToOrtho(false, w, h);

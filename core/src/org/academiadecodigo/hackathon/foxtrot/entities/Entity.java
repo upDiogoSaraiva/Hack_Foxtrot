@@ -11,16 +11,23 @@ public abstract class Entity {
     protected float velocityY = 0;
     protected GameMap map;
     protected boolean grounded = false;
+    protected long timeSinceLastMove;
 
     public Entity(float x, float y, EntityType type, GameMap map) {
 
-    this.pos = new Vector2(x,y);
-    this.type = type;
-    this.map = map;
+        this.pos = new Vector2(x, y);
+        this.type = type;
+        this.map = map;
 
     }
+
     public void update(float deltaTime, float gravity) {
-        System.out.println(getX());
+
+
+
+
+        System.out.println("x-->" + getX());
+        System.out.println("y-->" + getY());
 
         float newY = pos.y;
 
@@ -86,6 +93,14 @@ public abstract class Entity {
 
     public float getWeight() {
         return type.getWeight();
+    }
+
+    public float setX(float x) {
+        return pos.x = x;
+    }
+
+    public float setY(float y) {
+        return pos.y = y;
     }
 
 }

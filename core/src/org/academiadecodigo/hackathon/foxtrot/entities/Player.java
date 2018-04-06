@@ -11,6 +11,7 @@ public class Player extends Entity {
     //if translate (2,0) 120 is the same speed as the map
     private static final int SPEED = 190;
     private static final int JUMP_VELOCITY = 5;
+    private boolean canMove = true;
 
     private Texture image;
 
@@ -40,18 +41,32 @@ public class Player extends Entity {
     }
 
     private void move(float deltaTime) {
-        if (Gdx.input.isKeyPressed(Input.Keys.LEFT)) {
-            moveX(-SPEED * deltaTime);
+
+        timeSinceLastMove += deltaTime;
+
+        if (timeSinceLastMove > 3000) {
+            return;
         }
 
-        if (Gdx.input.isKeyPressed(Input.Keys.RIGHT)) {
-            moveX(SPEED * deltaTime);
+        if(canMove) {
+            if (Gdx.input.isKeyPressed(Input.Keys.LEFT)) {
+                moveX(-SPEED * deltaTime);
+            }
+
+            if (Gdx.input.isKeyPressed(Input.Keys.RIGHT)) {
+                moveX(SPEED * deltaTime);
+            }
         }
+        timeSinceLastMove = 0;
     }
 
     @Override
     public void render(SpriteBatch batch) {
         batch.draw(image, pos.x, pos.y, getWidth(), getHeight());
+    }
+
+    public void setCanMove(boolean canMove) {
+        this.canMove = canMove;
     }
 }
 
