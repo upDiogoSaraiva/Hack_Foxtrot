@@ -29,7 +29,6 @@ public class InstructionScreen implements MenuScreen {
 
     public InstructionScreen(InnerMenus innerMenus) {
         this.innerMenus = innerMenus;
-        image = new Texture("player.png");
     }
 
     @Override
@@ -54,7 +53,7 @@ public class InstructionScreen implements MenuScreen {
         TextButton menu = new TextButton("Menu", skin);
         TextButton exitButton = new TextButton("Exit", skin);
 
-        image = new Texture(Gdx.files.internal("player.png"));
+        image = new Texture(Gdx.files.internal("Instructions.png"));
         pictureBatch = new SpriteBatch();
 
         Table table = new Table(skin);
@@ -85,16 +84,16 @@ public class InstructionScreen implements MenuScreen {
                 Gdx.app.exit();
             }
         });
-
     }
 
     @Override
     public void render(float delta) {
+
         Gdx.gl.glClearColor(.1f, .12f, .16f, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
         pictureBatch.begin();
-        pictureBatch.draw(image, 500, 300);
+        pictureBatch.draw(image, 0, 0);
         pictureBatch.end();
 
         stage.act(delta);

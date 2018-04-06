@@ -45,6 +45,8 @@ public class Game implements MenuScreen {
         gameMap.render(camera, batch);
 
         gameMap.endGame();
+
+
     }
 
     @Override

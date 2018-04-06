@@ -20,10 +20,11 @@ public class InnerMenus extends Game {
     public void create() {
 
         screenMap = new HashMap<ScreenTypes, MenuScreen>();
+
         MenuScreen screen = new Menu(this);
         MenuScreen screen2 = new InstructionScreen(this);
         MenuScreen game = new org.academiadecodigo.hackathon.foxtrot.Game(this);
-
+        MenuScreen gameover = new GameOverScreen(this);
 
         screen.init();
         screen2.init();

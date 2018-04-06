@@ -2,18 +2,16 @@ package org.academiadecodigo.hackathon.foxtrot;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import org.academiadecodigo.hackathon.foxtrot.TileType;
 import org.academiadecodigo.hackathon.foxtrot.entities.Coffin;
 import org.academiadecodigo.hackathon.foxtrot.entities.Entity;
 import org.academiadecodigo.hackathon.foxtrot.entities.EntityType;
 import org.academiadecodigo.hackathon.foxtrot.entities.Player;
+import org.academiadecodigo.hackathon.foxtrot.menu.GameOverScreen;
 import org.academiadecodigo.hackathon.foxtrot.menu.InnerMenus;
-import org.academiadecodigo.hackathon.foxtrot.menu.Menu;
-import org.academiadecodigo.hackathon.foxtrot.menu.MenuScreen;
 import org.academiadecodigo.hackathon.foxtrot.menu.ScreenTypes;
 
-import java.rmi.MarshalException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -22,15 +20,22 @@ public abstract class GameMap {
     private static final float GRAVITY = -9.8f;
     private Player player;
     private Coffin coffin;
+    private SpriteBatch gameover;
+    private Texture image;
 
+    private GameOverScreen gameOverScreen;
     private InnerMenus innerMenus;
-
 
     protected List<Entity> entities;
 
     public GameMap(InnerMenus innerMenus) {
-        this.innerMenus=innerMenus;
 
+        this.innerMenus = innerMenus;
+
+        gameOverScreen = new GameOverScreen(innerMenus);
+
+        image = new Texture(Gdx.files.internal("player.png"));
+        gameover = new SpriteBatch();
 
         this.entities = new ArrayList<Entity>();
         coffin = new Coffin(0, 600, this);
@@ -38,8 +43,6 @@ public abstract class GameMap {
 
         player = new Player(80, 600, this);
         entities.add(player);
-
-
     }
 
     public void render(OrthographicCamera camera, SpriteBatch batch) {
@@ -62,11 +65,11 @@ public abstract class GameMap {
 
         player = (Player) entities.get(1);
 
-
         if (player.getType().equals(EntityType.PLAYER)) {
 
             if ((player.getX() <= entities.get(0).getX()) || player.isDead()) {
-                innerMenus.setScreen(ScreenTypes.MENU);
+
+                gameOverScreen.init();
             }
         }
     }

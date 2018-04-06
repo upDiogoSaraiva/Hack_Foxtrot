@@ -32,7 +32,6 @@ public class Menu implements MenuScreen {
 
     public Menu(InnerMenus innerMenus) {
         this.innerMenus = innerMenus;
-        //game = new Game();
     }
 
     public void init() {
@@ -60,8 +59,6 @@ public class Menu implements MenuScreen {
         startGame.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                //game.create();
-                //TODO add game page
                 innerMenus.setScreen(ScreenTypes.GAME);
                 game.show();
 
@@ -72,7 +69,6 @@ public class Menu implements MenuScreen {
             @Override
             public void clicked(InputEvent event, float x, float y) {
 
-                //TODO add instructions page
                 innerMenus.setScreen(ScreenTypes.INSTRUCTION);
             }
         });
@@ -108,12 +104,6 @@ public class Menu implements MenuScreen {
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         stage.act(delta);
         stage.draw();
-       // game.render(delta);
-
-
-
-
-
     }
 
     @Override
