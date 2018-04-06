@@ -1,5 +1,6 @@
 package org.academiadecodigo.hackathon.foxtrot;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import org.academiadecodigo.hackathon.foxtrot.TileType;
@@ -45,7 +46,7 @@ public abstract class GameMap {
         if (entity.getType().equals(EntityType.PLAYER)) {
 
             if (entity.isDead()) {
-                System.exit(0); //TODO GAME OVER return to menu
+                Gdx.app.exit(); //TODO GAME OVER return to menu
             }
         }
     }
@@ -78,8 +79,6 @@ public abstract class GameMap {
 
         return false;
     }
-
-
 
     public abstract int getWidth();
 
