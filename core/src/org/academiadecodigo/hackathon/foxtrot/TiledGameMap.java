@@ -1,5 +1,6 @@
 package org.academiadecodigo.hackathon.foxtrot;
 
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.maps.tiled.TiledMap;
@@ -17,10 +18,11 @@ public class TiledGameMap extends GameMap {
     private OrthogonalTiledMapRenderer tiledMapRenderer;
     private OrthographicCamera camera;
     private boolean firstMap = true;
+    private Sound sound;
 
 
-    public TiledGameMap(InnerMenus innerMenus) {
-        super(innerMenus);
+    public TiledGameMap(InnerMenus innerMenus,Sound sound, Menu menu) {
+        super(innerMenus,sound, menu);
 
         loadMap(1);
 

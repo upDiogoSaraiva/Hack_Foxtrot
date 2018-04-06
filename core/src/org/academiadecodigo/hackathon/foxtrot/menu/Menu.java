@@ -1,12 +1,10 @@
 package org.academiadecodigo.hackathon.foxtrot.menu;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Screen;
-import com.badlogic.gdx.backends.lwjgl.LwjglApplication;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
@@ -27,17 +25,20 @@ public class Menu implements MenuScreen {
     private TextureAtlas atlas;
 
     private Game game;
+    protected long soundID;
+
+
 
     private InnerMenus innerMenus;
 
     public Menu(InnerMenus innerMenus) {
         this.innerMenus = innerMenus;
-        //game = new Game();
+
     }
 
     public void init() {
         batch = new SpriteBatch();
-        game = new Game(innerMenus);
+        game = new Game(innerMenus, this);
         atlas = new TextureAtlas("uiskin.atlas");
         skin = new Skin(Gdx.files.internal("uiskin.json"));
         Camera camera = new OrthographicCamera();
@@ -57,6 +58,8 @@ public class Menu implements MenuScreen {
         TextButton instructionsButton = new TextButton("Instructions", skin);
         TextButton exitButton = new TextButton("Exit", skin);
 
+
+
         startGame.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
@@ -64,6 +67,8 @@ public class Menu implements MenuScreen {
                 //TODO add game page
                 innerMenus.setScreen(ScreenTypes.GAME);
                 game.show();
+
+
 
             }
         });
@@ -116,6 +121,7 @@ public class Menu implements MenuScreen {
 
     }
 
+
     @Override
     public void resize(int width, int height) {
 
@@ -143,4 +149,9 @@ public class Menu implements MenuScreen {
         skin.dispose();
         atlas.dispose();
     }
+
+    public long getSoundID() {
+        return soundID;
+    }
+
 }

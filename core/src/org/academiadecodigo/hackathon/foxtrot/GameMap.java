@@ -1,19 +1,16 @@
 package org.academiadecodigo.hackathon.foxtrot;
 
-import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import org.academiadecodigo.hackathon.foxtrot.TileType;
 import org.academiadecodigo.hackathon.foxtrot.entities.Coffin;
 import org.academiadecodigo.hackathon.foxtrot.entities.Entity;
 import org.academiadecodigo.hackathon.foxtrot.entities.EntityType;
 import org.academiadecodigo.hackathon.foxtrot.entities.Player;
 import org.academiadecodigo.hackathon.foxtrot.menu.InnerMenus;
 import org.academiadecodigo.hackathon.foxtrot.menu.Menu;
-import org.academiadecodigo.hackathon.foxtrot.menu.MenuScreen;
 import org.academiadecodigo.hackathon.foxtrot.menu.ScreenTypes;
 
-import java.rmi.MarshalException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -23,13 +20,18 @@ public abstract class GameMap {
     private Player player;
     private Coffin coffin;
 
+
     private InnerMenus innerMenus;
+    private Menu menu;
+    private Sound sound;
 
 
     protected List<Entity> entities;
 
-    public GameMap(InnerMenus innerMenus) {
-        this.innerMenus=innerMenus;
+    public GameMap(InnerMenus innerMenus, Sound sound, Menu menu) {
+        this.sound = sound;
+        this.innerMenus = innerMenus;
+        this.menu = menu;
 
 
         this.entities = new ArrayList<Entity>();
@@ -60,7 +62,7 @@ public abstract class GameMap {
 
     public abstract void dispose();
 
-    public void endGame() {
+    public boolean endGame() {
 
         player = (Player) entities.get(1);
 
@@ -68,11 +70,15 @@ public abstract class GameMap {
         if (player.getType().equals(EntityType.PLAYER)) {
 
             if ((player.getX() <= entities.get(0).getX()) || player.isDead()) {
-               // Gdx.app.exit(); //TODO GAME OVER return to menu
-                innerMenus.setScreen(ScreenTypes.MENU);
+                // Gdx.app.exit(); //TODO GAME OVER return to menu
+                return true;
+
                 //menu.show();
             }
+
         }
+
+        return false;
     }
 
     public TileType getTileTypeByLocation(int layer, float x, float y) {
@@ -118,6 +124,7 @@ public abstract class GameMap {
         return this.getHeight() * TileType.TILE_SIZE;
 
     }
+
 
     public Coffin getCoffin() {
         return coffin;
