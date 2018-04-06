@@ -1,10 +1,10 @@
 package org.academiadecodigo.hackathon.foxtrot.menu;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
@@ -24,21 +24,20 @@ public class Menu implements MenuScreen {
     private Skin skin;
     private TextureAtlas atlas;
 
+    private SpriteBatch pictureBatch;
+    private Texture image;
+
     private Game game;
-    protected long soundID;
-
-
 
     private InnerMenus innerMenus;
 
     public Menu(InnerMenus innerMenus) {
         this.innerMenus = innerMenus;
-
     }
 
     public void init() {
         batch = new SpriteBatch();
-        game = new Game(innerMenus, this);
+        game = new Game(innerMenus);
         atlas = new TextureAtlas("uiskin.atlas");
         skin = new Skin(Gdx.files.internal("uiskin.json"));
         Camera camera = new OrthographicCamera();
@@ -54,6 +53,9 @@ public class Menu implements MenuScreen {
     public void show() {
         Gdx.input.setInputProcessor(stage);
 
+        pictureBatch = new SpriteBatch();
+        image = new Texture(Gdx.files.internal("cover.png"));
+
         final TextButton startGame = new TextButton("Start Game", skin);
         TextButton instructionsButton = new TextButton("Instructions", skin);
         TextButton exitButton = new TextButton("Exit", skin);
@@ -63,8 +65,6 @@ public class Menu implements MenuScreen {
         startGame.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                //game.create();
-                //TODO add game page
                 innerMenus.setScreen(ScreenTypes.GAME);
                 game.show();
 
@@ -77,7 +77,6 @@ public class Menu implements MenuScreen {
             @Override
             public void clicked(InputEvent event, float x, float y) {
 
-                //TODO add instructions page
                 innerMenus.setScreen(ScreenTypes.INSTRUCTION);
             }
         });
@@ -111,13 +110,13 @@ public class Menu implements MenuScreen {
     public void render(float delta) {
         Gdx.gl.glClearColor(.1f, .12f, .16f, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+
+        pictureBatch.begin();
+        pictureBatch.draw(image, 0, 0);
+        pictureBatch.end();
+
         stage.act(delta);
         stage.draw();
-       // game.render(delta);
-
-
-
-
 
     }
 
@@ -148,10 +147,6 @@ public class Menu implements MenuScreen {
         batch.dispose();
         skin.dispose();
         atlas.dispose();
-    }
-
-    public long getSoundID() {
-        return soundID;
     }
 
 }

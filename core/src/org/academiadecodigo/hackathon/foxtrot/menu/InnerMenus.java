@@ -1,8 +1,6 @@
 package org.academiadecodigo.hackathon.foxtrot.menu;
 
-
 import com.badlogic.gdx.Game;
-import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.backends.lwjgl.LwjglApplicationConfiguration;
 
 import java.util.HashMap;
@@ -24,10 +22,11 @@ public class InnerMenus extends Game {
     public void create() {
 
         screenMap = new HashMap<ScreenTypes, MenuScreen>();
+
         MenuScreen screen = new Menu(this);
         MenuScreen screen2 = new InstructionScreen(this);
-        MenuScreen game = new org.academiadecodigo.hackathon.foxtrot.Game(this, (Menu) screen);
-
+        MenuScreen game = new org.academiadecodigo.hackathon.foxtrot.Game(this);
+        MenuScreen gameover = new GameOverScreen(this);
 
         screen.init();
         screen2.init();
@@ -35,6 +34,8 @@ public class InnerMenus extends Game {
         screenMap.put(ScreenTypes.MENU,screen);
         screenMap.put(ScreenTypes.INSTRUCTION,screen2);
         screenMap.put(ScreenTypes.GAME, game);
+        screenMap.put(ScreenTypes.GAMEOVER, gameover);
+
         super.setScreen(screen);
     }
 

@@ -1,6 +1,5 @@
 package org.academiadecodigo.hackathon.foxtrot;
 
-import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.maps.tiled.TiledMap;
@@ -9,8 +8,6 @@ import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import org.academiadecodigo.hackathon.foxtrot.menu.InnerMenus;
-import org.academiadecodigo.hackathon.foxtrot.menu.Menu;
-import org.academiadecodigo.hackathon.foxtrot.menu.MenuScreen;
 
 public class TiledGameMap extends GameMap {
 
@@ -18,11 +15,9 @@ public class TiledGameMap extends GameMap {
     private OrthogonalTiledMapRenderer tiledMapRenderer;
     private OrthographicCamera camera;
     private boolean firstMap = true;
-    private Sound sound;
 
-
-    public TiledGameMap(InnerMenus innerMenus,Sound sound, Menu menu) {
-        super(innerMenus,sound, menu);
+    public TiledGameMap(InnerMenus innerMenus) {
+        super(innerMenus);
 
         loadMap(1);
 
@@ -33,9 +28,7 @@ public class TiledGameMap extends GameMap {
     public void render(OrthographicCamera camera, SpriteBatch batch) {
         this.camera = camera;
 
-
-
-        if(getPlayer().getX() > 2600 && firstMap){
+        if (getPlayer().getX() > 2600 && firstMap) {
 
             getPlayer().setCanMove(false);
             tiledMap = null;
@@ -50,7 +43,6 @@ public class TiledGameMap extends GameMap {
             firstMap = false;
 
 
-
             getPlayer().setCanMove(true);
         }
 
@@ -63,24 +55,17 @@ public class TiledGameMap extends GameMap {
             camera.update();
         }
 
-
-
-
         batch.setProjectionMatrix(camera.combined);
         batch.begin();
         super.render(camera, batch);
         batch.end();
+
     }
 
     @Override
     public void update(float delta) {
 
         super.update(delta);
-    }
-
-    @Override
-    public void dispose() {
-        tiledMap.dispose();
     }
 
     @Override
@@ -104,7 +89,7 @@ public class TiledGameMap extends GameMap {
 
     public void loadMap(int map) {
 
-        tiledMap = new TmxMapLoader().load("map"  + map + ".tmx");
+        tiledMap = new TmxMapLoader().load("map" + map + ".tmx");
         tiledMapRenderer = new OrthogonalTiledMapRenderer(tiledMap);
 
 

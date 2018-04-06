@@ -5,6 +5,7 @@ public enum ScreenTypes {
     MENU,
     INSTRUCTION,
     GAME,
+    GAMEOVER
 
 
 }

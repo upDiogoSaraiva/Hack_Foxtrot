@@ -1,14 +1,15 @@
 package org.academiadecodigo.hackathon.foxtrot;
 
-import com.badlogic.gdx.audio.Sound;
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import org.academiadecodigo.hackathon.foxtrot.entities.Coffin;
 import org.academiadecodigo.hackathon.foxtrot.entities.Entity;
 import org.academiadecodigo.hackathon.foxtrot.entities.EntityType;
 import org.academiadecodigo.hackathon.foxtrot.entities.Player;
+import org.academiadecodigo.hackathon.foxtrot.menu.GameOverScreen;
 import org.academiadecodigo.hackathon.foxtrot.menu.InnerMenus;
-import org.academiadecodigo.hackathon.foxtrot.menu.Menu;
 import org.academiadecodigo.hackathon.foxtrot.menu.ScreenTypes;
 
 import java.util.ArrayList;
@@ -19,29 +20,28 @@ public abstract class GameMap {
     private static final float GRAVITY = -9.8f;
     private Player player;
     private Coffin coffin;
+    private SpriteBatch gameover;
+    private Texture image;
 
-
+    private GameOverScreen gameOverScreen;
     private InnerMenus innerMenus;
-    private Menu menu;
-    private Sound sound;
-
 
     protected List<Entity> entities;
 
-    public GameMap(InnerMenus innerMenus, Sound sound, Menu menu) {
-        this.sound = sound;
+    public GameMap(InnerMenus innerMenus) {
         this.innerMenus = innerMenus;
-        this.menu = menu;
 
+        gameOverScreen = new GameOverScreen(innerMenus);
+
+        image = new Texture(Gdx.files.internal("player.png"));
+        gameover = new SpriteBatch();
 
         this.entities = new ArrayList<Entity>();
         coffin = new Coffin(0, 600, this);
         entities.add(coffin);
 
-        player = new Player(50, 600, this);
+        player = new Player(80, 600, this);
         entities.add(player);
-
-
     }
 
     public void render(OrthographicCamera camera, SpriteBatch batch) {
@@ -60,22 +60,18 @@ public abstract class GameMap {
         }
     }
 
-    public abstract void dispose();
-
     public boolean endGame() {
 
         player = (Player) entities.get(1);
 
-
         if (player.getType().equals(EntityType.PLAYER)) {
 
             if ((player.getX() <= entities.get(0).getX()) || player.isDead()) {
-                // Gdx.app.exit(); //TODO GAME OVER return to menu
-                return true;
 
-                //menu.show();
+                innerMenus.setScreen(ScreenTypes.GAMEOVER);
+
+                return  true;
             }
-
         }
 
         return false;
@@ -84,7 +80,6 @@ public abstract class GameMap {
     public TileType getTileTypeByLocation(int layer, float x, float y) {
         return getTileTypeByCoordinate(layer, (int) (x / TileType.TILE_SIZE), (int) (y / TileType.TILE_SIZE));
     }
-
 
     public abstract TileType getTileTypeByCoordinate(int layer, int col, int row);
 

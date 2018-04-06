@@ -2,18 +2,15 @@ package org.academiadecodigo.hackathon.foxtrot;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.audio.Music;
-import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import org.academiadecodigo.hackathon.foxtrot.menu.InnerMenus;
-import org.academiadecodigo.hackathon.foxtrot.menu.Menu;
 import org.academiadecodigo.hackathon.foxtrot.menu.MenuScreen;
 import org.academiadecodigo.hackathon.foxtrot.menu.ScreenTypes;
 
 public class Game implements MenuScreen {
 
-    private Menu menu;
     private OrthographicCamera camera;
     private SpriteBatch batch;
 
@@ -21,13 +18,9 @@ public class Game implements MenuScreen {
     private InnerMenus innerMenus;
 
     private Music music;
-    private Sound sound;
-    private long soundID;
 
-
-    public Game(InnerMenus innerMenus, Menu menuScreen) {
+    public Game(InnerMenus innerMenus) {
         this.innerMenus = innerMenus;
-        this.menu = menuScreen;
     }
 
     @Override
@@ -38,12 +31,11 @@ public class Game implements MenuScreen {
 
         float w = Gdx.graphics.getWidth();
         float h = Gdx.graphics.getHeight();
-        System.out.println(w + "--" + h);
 
         camera = new OrthographicCamera();
         camera.setToOrtho(false, w, h);
         camera.update();
-        gameMap = new TiledGameMap(innerMenus, sound, menu);
+        gameMap = new TiledGameMap(innerMenus);
 
         if (music == null) {
             music = Gdx.audio.newMusic(Gdx.files.internal("bestGameEver.wav"));
@@ -63,20 +55,9 @@ public class Game implements MenuScreen {
 
         if (gameMap.endGame()) {
 
-            System.out.println("SOUND " + sound);
-            System.out.println("MENU " + menu);
-
             music.stop();
-            //sound.stop(menu.getSoundID());
-            //sound.stop(soundID);
-            //sound.dispose();
-            innerMenus.setScreen(ScreenTypes.MENU);
-
+            innerMenus.setScreen(ScreenTypes.GAMEOVER);
         }
-    }
-
-    public GameMap getGameMap() {
-        return gameMap;
     }
 
     @Override

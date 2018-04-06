@@ -1,23 +1,22 @@
 package org.academiadecodigo.hackathon.foxtrot.menu;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.*;
-import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.badlogic.gdx.graphics.Camera;
+import com.badlogic.gdx.graphics.GL20;
+import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
-import org.academiadecodigo.hackathon.foxtrot.Game;
 
-public class InstructionScreen implements MenuScreen {
+public class GameOverScreen implements MenuScreen {
 
     private InnerMenus innerMenus;
     private SpriteBatch batch;
@@ -27,8 +26,9 @@ public class InstructionScreen implements MenuScreen {
     private Texture image;
     private SpriteBatch pictureBatch;
 
-    public InstructionScreen(InnerMenus innerMenus) {
+    public GameOverScreen(InnerMenus innerMenus) {
         this.innerMenus = innerMenus;
+        init();
     }
 
     @Override
@@ -50,26 +50,20 @@ public class InstructionScreen implements MenuScreen {
     public void show() {
 
         Gdx.input.setInputProcessor(stage);
-        TextButton menu = new TextButton("Menu", skin);
-        TextButton exitButton = new TextButton("Exit", skin);
+        TextButton menu = new TextButton("PlayBack", skin);
 
-        image = new Texture(Gdx.files.internal("Instructions.png"));
-        pictureBatch = new SpriteBatch();
+        image = new Texture(Gdx.files.internal("GameOver.png"));
+        batch = new SpriteBatch();
 
         Table table = new Table(skin);
 
         table.setFillParent(true);
 
-        table.center();
+        table.padBottom(-400);
         table.add(menu);
         table.row().pad(10);
-        table.add(exitButton);
-        table.row().pad(10);
-
-        table.add(exitButton);
 
         stage.addActor(table);
-
 
         menu.addListener(new ClickListener() {
             @Override
@@ -77,25 +71,17 @@ public class InstructionScreen implements MenuScreen {
                 innerMenus.setScreen(ScreenTypes.MENU);
             }
         });
-
-        exitButton.addListener(new ClickListener() {
-            @Override
-            public void clicked(InputEvent event, float x, float y) {
-                Gdx.app.exit();
-            }
-        });
+        
     }
 
     @Override
     public void render(float delta) {
-
         Gdx.gl.glClearColor(.1f, .12f, .16f, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
-        pictureBatch.begin();
-        pictureBatch.draw(image, 0, 0);
-        pictureBatch.end();
-
+        batch.begin();
+        batch.draw(image, 0, 0);
+        batch.end();
         stage.act(delta);
         stage.draw();
     }
