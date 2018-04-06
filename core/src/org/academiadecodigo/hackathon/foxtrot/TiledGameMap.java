@@ -1,6 +1,5 @@
 package org.academiadecodigo.hackathon.foxtrot;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.maps.tiled.TiledMap;
@@ -26,15 +25,17 @@ public class TiledGameMap extends GameMap {
         this.camera = camera;
 
 
+
         if(getPlayer().getX() > 2600 && firstMap){
 
             getPlayer().setCanMove(false);
             tiledMap = null;
-            System.out.println("hello world");
             loadMap(2);
             camera.position.x = 500;
 
             camera.update();
+            getCoffin().setX(0);
+
             getPlayer().setX(830);
             getPlayer().setY(352);
             firstMap = false;

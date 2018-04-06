@@ -1,8 +1,12 @@
 package org.academiadecodigo.hackathon.foxtrot;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import org.academiadecodigo.hackathon.foxtrot.TileType;
+import org.academiadecodigo.hackathon.foxtrot.entities.Coffin;
 import org.academiadecodigo.hackathon.foxtrot.entities.Entity;
+import org.academiadecodigo.hackathon.foxtrot.entities.EntityType;
 import org.academiadecodigo.hackathon.foxtrot.entities.Player;
 
 import java.util.ArrayList;
@@ -12,19 +16,23 @@ public abstract class GameMap {
 
     private static final float GRAVITY = -9.8f;
     private Player player;
+    private Coffin coffin;
 
     protected List<Entity> entities;
 
     public GameMap() {
 
         this.entities = new ArrayList<Entity>();
-        player = new Player(40, 600, this);
+        coffin = new Coffin(0, 600, this);
+        entities.add(coffin);
+
+        player = new Player(50, 600, this);
         entities.add(player);
     }
 
-
-
     public void render(OrthographicCamera camera, SpriteBatch batch) {
+
+        entities.get(0).setY(entities.get(1).getY());
 
         for (Entity entity : entities) {
             entity.render(batch);
@@ -40,9 +48,27 @@ public abstract class GameMap {
 
     public abstract void dispose();
 
+    public void endGame() {
+
+        player = (Player) entities.get(1);
+
+
+        if (player.getType().equals(EntityType.PLAYER)) {
+
+            if ((player.getX() <= entities.get(0).getX()) || player.isDead()) {
+                Gdx.app.exit(); //TODO GAME OVER return to menu
+            }
+        }
+    }
+
+    public TileType getTileTypeByLocation(int layer, float x, float y) {
+        return getTileTypeByCoordinate(layer, (int) (x / TileType.TILE_SIZE), (int) (y / TileType.TILE_SIZE));
+    }
+
+
     public abstract TileType getTileTypeByCoordinate(int layer, int col, int row);
 
-    public boolean doesRectCollideWithMap(float x, float y, int width, int height) {
+    public boolean doesRectCollideWithMap(float x, float y, int width, int height, boolean isCoffin) {
 
         if (x < 0 || y < 0 || x + width > getPixelWidth() || y + height > getPixelHeight()) {
             return true;
@@ -55,7 +81,7 @@ public abstract class GameMap {
                     TileType type = getTileTypeByCoordinate(layer, col, row);
 
                     if (type != null && type.isCollidable()) {
-                        return true;
+                        return !isCoffin;
                     }
                 }
             }
@@ -79,7 +105,9 @@ public abstract class GameMap {
 
     }
 
-
+    public Coffin getCoffin() {
+        return coffin;
+    }
 
     public Player getPlayer() {
         return player;

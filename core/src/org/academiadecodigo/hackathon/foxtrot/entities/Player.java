@@ -5,6 +5,7 @@ import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import org.academiadecodigo.hackathon.foxtrot.GameMap;
+import org.academiadecodigo.hackathon.foxtrot.TileType;
 
 public class Player extends Entity {
 
@@ -22,12 +23,21 @@ public class Player extends Entity {
 
     @Override
     public void update(float deltaTime, float gravity) {
+
+        verifyDeath();
+
         jumps(deltaTime);
 
         super.update(deltaTime, gravity);
 
         move(deltaTime);
+    }
 
+    public void verifyDeath() {
+
+        if (map.getTileTypeByLocation(1, pos.x, pos.y).equals(TileType.LAVA)) {
+            isDead = true;
+        }
     }
 
     private void jumps(float deltaTime) {
@@ -40,15 +50,9 @@ public class Player extends Entity {
         }
     }
 
-    private void move(float deltaTime) {
-
-        timeSinceLastMove += deltaTime;
-
-        if (timeSinceLastMove > 3000) {
-            return;
-        }
-
-        if(canMove) {
+    @Override
+    protected void move(float deltaTime) {
+        if (canMove) {
             if (Gdx.input.isKeyPressed(Input.Keys.LEFT)) {
                 moveX(-SPEED * deltaTime);
             }
@@ -57,8 +61,9 @@ public class Player extends Entity {
                 moveX(SPEED * deltaTime);
             }
         }
-        timeSinceLastMove = 0;
     }
+
+
 
     @Override
     public void render(SpriteBatch batch) {
