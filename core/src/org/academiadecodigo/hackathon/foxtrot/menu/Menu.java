@@ -26,6 +26,9 @@ public class Menu implements MenuScreen {
     private Skin skin;
     private TextureAtlas atlas;
 
+    private SpriteBatch pictureBatch;
+    private Texture image;
+
     private Game game;
 
     private InnerMenus innerMenus;
@@ -51,6 +54,9 @@ public class Menu implements MenuScreen {
     @Override
     public void show() {
         Gdx.input.setInputProcessor(stage);
+
+        pictureBatch = new SpriteBatch();
+        image = new Texture(Gdx.files.internal("cover.png"));
 
         final TextButton startGame = new TextButton("Start Game", skin);
         TextButton instructionsButton = new TextButton("Instructions", skin);
@@ -102,8 +108,14 @@ public class Menu implements MenuScreen {
     public void render(float delta) {
         Gdx.gl.glClearColor(.1f, .12f, .16f, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+
+        pictureBatch.begin();
+        pictureBatch.draw(image, 0, 0);
+        pictureBatch.end();
+
         stage.act(delta);
         stage.draw();
+
     }
 
     @Override
