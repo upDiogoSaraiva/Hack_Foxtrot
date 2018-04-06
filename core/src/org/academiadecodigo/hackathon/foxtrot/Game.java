@@ -24,7 +24,6 @@ public class Game extends ApplicationAdapter {
         camera = new OrthographicCamera();
         camera.setToOrtho(false, w, h);
         camera.update();
-
         gameMap = new TiledGameMap();
     }
 
@@ -45,5 +44,9 @@ public class Game extends ApplicationAdapter {
 
         batch.dispose();
         gameMap.dispose();
+    }
+
+    public void setNewGame () {
+        new Game();
     }
 }
