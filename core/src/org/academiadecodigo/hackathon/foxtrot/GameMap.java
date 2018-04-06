@@ -27,6 +27,8 @@ public abstract class GameMap {
 
     public void render(OrthographicCamera camera, SpriteBatch batch) {
 
+        entities.get(0).setY(entities.get(1).getY());
+        
         for (Entity entity : entities) {
             entity.render(batch);
         }

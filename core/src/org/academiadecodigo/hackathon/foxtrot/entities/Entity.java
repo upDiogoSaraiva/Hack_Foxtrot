@@ -3,7 +3,6 @@ package org.academiadecodigo.hackathon.foxtrot.entities;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 import org.academiadecodigo.hackathon.foxtrot.GameMap;
-import org.academiadecodigo.hackathon.foxtrot.TileType;
 
 public abstract class Entity {
 
@@ -73,6 +72,10 @@ public abstract class Entity {
 
     public float getY() {
         return pos.y;
+    }
+
+    public void setY(float y) {
+        this.pos.y = y;
     }
 
     public EntityType getType() {
