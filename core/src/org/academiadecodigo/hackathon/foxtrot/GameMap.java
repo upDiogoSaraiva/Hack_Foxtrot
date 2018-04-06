@@ -26,7 +26,7 @@ public abstract class GameMap {
         coffin = new Coffin(0, 600, this);
         entities.add(coffin);
 
-        player = new Player(50, 600, this);
+        player = new Player(80, 600, this);
         entities.add(player);
     }
 
