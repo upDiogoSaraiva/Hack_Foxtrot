@@ -14,6 +14,8 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
+import org.academiadecodigo.hackathon.foxtrot.TiledGameMap;
+import sun.jvm.hotspot.utilities.BitMap;
 
 public class GameOverScreen implements MenuScreen {
 
@@ -23,10 +25,10 @@ public class GameOverScreen implements MenuScreen {
     private Skin skin;
     private TextureAtlas atlas;
     private Texture image;
-    private SpriteBatch pictureBatch;
-    private SpriteBatch fontbatch;
+
+    private SpriteBatch textBatch;
     private BitmapFont font;
-    private Texture texture;
+    private String myText;
 
     public GameOverScreen(InnerMenus innerMenus) {
         this.innerMenus = innerMenus;
@@ -37,7 +39,6 @@ public class GameOverScreen implements MenuScreen {
     public void init() {
 
         batch = new SpriteBatch();
-        fontbatch = new SpriteBatch();
         atlas = new TextureAtlas("uiskin.atlas");
         skin = new Skin(Gdx.files.internal("uiskin.json"));
         Camera camera = new OrthographicCamera();
@@ -52,22 +53,14 @@ public class GameOverScreen implements MenuScreen {
     @Override
     public void show() {
 
-        font = new BitmapFont(Gdx.files.internal("arial.fnt"));
-        fontbatch.begin();
-
-        texture = new Texture(Gdx.files.internal("arial.png"));
-
-        TextureRegion bg = new TextureRegion(texture, 500,500);
-
-
-        fontbatch.draw(texture, 500,500);
-        font.setColor(Color.WHITE);
-        fontbatch.end();
-
-
-
         Gdx.input.setInputProcessor(stage);
         TextButton menu = new TextButton("PlayBack", skin);
+
+        textBatch = new SpriteBatch();
+        font = new BitmapFont(Gdx.files.internal("arial.fnt"));
+        int points = TiledGameMap.score;
+
+        myText = Integer.toString(points);
 
         image = new Texture(Gdx.files.internal("GameOver.png"));
         batch = new SpriteBatch();
@@ -88,17 +81,23 @@ public class GameOverScreen implements MenuScreen {
                 innerMenus.setScreen(ScreenTypes.MENU);
             }
         });
-        
+
     }
 
     @Override
     public void render(float delta) {
-        Gdx.gl.glClearColor(.1f, .12f, .16f, 1);
+        Gdx.gl.glClearColor(0, 0, 0, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+
 
         batch.begin();
         batch.draw(image, 0, 0);
         batch.end();
+
+        textBatch.begin();
+        font.draw(textBatch, myText, Gdx.graphics.getWidth() /2 - 25, Gdx.graphics.getHeight() / 2 - 120);
+        textBatch.end();
+
         stage.act(delta);
         stage.draw();
     }
@@ -125,8 +124,6 @@ public class GameOverScreen implements MenuScreen {
 
     @Override
     public void dispose() {
-
-        font.dispose();
 
     }
 }
