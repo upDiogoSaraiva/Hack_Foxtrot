@@ -32,12 +32,12 @@ public class Menu implements MenuScreen {
 
     public Menu(InnerMenus innerMenus) {
         this.innerMenus = innerMenus;
-        game = new Game();
+        //game = new Game();
     }
 
     public void init() {
         batch = new SpriteBatch();
-        game = new Game();
+        game = new Game(innerMenus);
         atlas = new TextureAtlas("uiskin.atlas");
         skin = new Skin(Gdx.files.internal("uiskin.json"));
         Camera camera = new OrthographicCamera();

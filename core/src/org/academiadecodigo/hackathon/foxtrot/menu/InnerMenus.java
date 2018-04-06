@@ -23,7 +23,7 @@ public class InnerMenus extends Game {
         screenMap = new HashMap<ScreenTypes, MenuScreen>();
         MenuScreen screen = new Menu(this);
         MenuScreen screen2 = new InstructionScreen(this);
-        MenuScreen game = new org.academiadecodigo.hackathon.foxtrot.Game();
+        MenuScreen game = new org.academiadecodigo.hackathon.foxtrot.Game(this);
 
 
         screen.init();

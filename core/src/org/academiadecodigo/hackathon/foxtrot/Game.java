@@ -4,6 +4,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import org.academiadecodigo.hackathon.foxtrot.menu.InnerMenus;
 import org.academiadecodigo.hackathon.foxtrot.menu.MenuScreen;
 
 public class Game implements MenuScreen {
@@ -12,6 +13,11 @@ public class Game implements MenuScreen {
     private SpriteBatch batch;
 
     private GameMap gameMap;
+    private InnerMenus innerMenus;
+
+    public Game(InnerMenus innerMenus) {
+        this.innerMenus= innerMenus;
+    }
 
     @Override
     public void show() {
@@ -26,7 +32,7 @@ public class Game implements MenuScreen {
         camera = new OrthographicCamera();
         camera.setToOrtho(false, w, h);
         camera.update();
-        gameMap = new TiledGameMap();
+        gameMap = new TiledGameMap(innerMenus);
     }
 
     @Override

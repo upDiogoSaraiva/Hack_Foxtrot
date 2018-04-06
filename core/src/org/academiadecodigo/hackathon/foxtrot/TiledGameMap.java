@@ -7,6 +7,9 @@ import com.badlogic.gdx.maps.tiled.TiledMapTile;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
+import org.academiadecodigo.hackathon.foxtrot.menu.InnerMenus;
+import org.academiadecodigo.hackathon.foxtrot.menu.Menu;
+import org.academiadecodigo.hackathon.foxtrot.menu.MenuScreen;
 
 public class TiledGameMap extends GameMap {
 
@@ -15,8 +18,12 @@ public class TiledGameMap extends GameMap {
     private OrthographicCamera camera;
     private boolean firstMap = true;
 
-    public TiledGameMap() {
+
+    public TiledGameMap(InnerMenus innerMenus) {
+        super(innerMenus);
+
         loadMap(1);
+
 
     }
 
