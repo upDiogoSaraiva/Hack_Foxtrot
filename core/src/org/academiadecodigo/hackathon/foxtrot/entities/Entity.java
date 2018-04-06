@@ -11,13 +11,14 @@ public abstract class Entity {
     protected float velocityY = 0;
     protected GameMap map;
     protected boolean grounded = false;
+    protected long timeSinceLastMove;
+    protected boolean isDead = false;
 
     public Entity(float x, float y, EntityType type, GameMap map) {
 
-    this.pos = new Vector2(x,y);
-    this.type = type;
-    this.map = map;
-
+        this.pos = new Vector2(x, y);
+        this.type = type;
+        this.map = map;
     }
     public void update(float deltaTime, float gravity) {
 
@@ -27,18 +28,20 @@ public abstract class Entity {
         newY += this.velocityY * deltaTime;
 
         checkCollision(newY);
-
     }
 
-    private void checkCollision(float newY) {
+    protected void checkCollision(float newY) {
 
-        if (map.doesRectCollideWithMap(pos.x, newY, getWidth(), getHeight())) {
+        if (map.doesRectCollideWithMap(pos.x, newY, getWidth(), getHeight(), this instanceof Coffin)) {
 
             if (velocityY < 0) {
+
                 this.pos.y = (float) Math.floor(pos.y);
                 grounded = true;
             }
+
             this.velocityY = 0;
+
         } else {
 
             this.pos.y = newY;
@@ -48,11 +51,13 @@ public abstract class Entity {
 
     public abstract void render(SpriteBatch batch);
 
+    protected abstract void move(float deltaTime);
+
     protected void moveX(float amount) {
 
         float newX = pos.x + amount;
 
-        if (!map.doesRectCollideWithMap(newX, pos.y, getWidth(), getHeight())) {
+        if (!map.doesRectCollideWithMap(newX, pos.y, getWidth(), getHeight(), this instanceof Coffin)) {
             this.pos.x = newX;
         }
     }
@@ -69,12 +74,17 @@ public abstract class Entity {
         return pos.y;
     }
 
+
     public EntityType getType() {
         return type;
     }
 
     public boolean isGrounded() {
         return grounded;
+    }
+
+    public boolean isDead() {
+        return isDead;
     }
 
     public int getWidth() {
@@ -87,6 +97,14 @@ public abstract class Entity {
 
     public float getWeight() {
         return type.getWeight();
+    }
+
+    public float setX(float x) {
+        return pos.x = x;
+    }
+
+    public float setY(float y) {
+        return pos.y = y;
     }
 
 }

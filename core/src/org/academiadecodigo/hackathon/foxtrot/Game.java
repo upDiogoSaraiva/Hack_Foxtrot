@@ -21,6 +21,7 @@ public class Game implements MenuScreen {
 
         float w = Gdx.graphics.getWidth();
         float h = Gdx.graphics.getHeight();
+        System.out.println(w +"--"+ h);
 
         camera = new OrthographicCamera();
         camera.setToOrtho(false, w, h);
@@ -34,10 +35,11 @@ public class Game implements MenuScreen {
         Gdx.gl.glClearColor(0, 0, 0, 1);
         Gdx.gl.glBlendFunc(GL20.GL_SRC_ALPHA, GL20.GL_ONE_MINUS_SRC_ALPHA);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-
         camera.update();
         gameMap.update(Gdx.graphics.getDeltaTime());
         gameMap.render(camera, batch);
+
+        gameMap.endGame();
     }
 
     @Override
@@ -69,4 +71,5 @@ public class Game implements MenuScreen {
     public void init() {
 
     }
+
 }

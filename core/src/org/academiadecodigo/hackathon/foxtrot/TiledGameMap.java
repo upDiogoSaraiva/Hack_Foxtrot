@@ -10,23 +10,51 @@ import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 
 public class TiledGameMap extends GameMap {
 
-    TiledMap tiledMap;
-    OrthogonalTiledMapRenderer tiledMapRenderer;
+    private TiledMap tiledMap;
+    private OrthogonalTiledMapRenderer tiledMapRenderer;
+    private OrthographicCamera camera;
+    private boolean firstMap = true;
 
     public TiledGameMap() {
+        loadMap(1);
 
-        tiledMap = new TmxMapLoader().load("map.tmx");
-        tiledMapRenderer = new OrthogonalTiledMapRenderer(tiledMap);
     }
 
     @Override
     public void render(OrthographicCamera camera, SpriteBatch batch) {
+        this.camera = camera;
+
+
+
+        if(getPlayer().getX() > 2600 && firstMap){
+
+            getPlayer().setCanMove(false);
+            tiledMap = null;
+            loadMap(2);
+            camera.position.x = 500;
+
+            camera.update();
+            getCoffin().setX(0);
+
+            getPlayer().setX(830);
+            getPlayer().setY(352);
+            firstMap = false;
+
+
+
+            getPlayer().setCanMove(true);
+        }
+
 
         tiledMapRenderer.setView(camera);
         tiledMapRenderer.render();
 
-        camera.translate(1,0);
-        camera.update();
+        if (camera.position.x < 2308) {
+            camera.translate(2, 0);
+            camera.update();
+        }
+
+
 
 
         batch.setProjectionMatrix(camera.combined);
@@ -54,6 +82,7 @@ public class TiledGameMap extends GameMap {
         if (cell != null) {
             TiledMapTile tile = cell.getTile();
 
+
             if (tile != null) {
 
                 int id = tile.getId();
@@ -64,8 +93,18 @@ public class TiledGameMap extends GameMap {
         return null;
     }
 
+    public void loadMap(int map) {
+
+        tiledMap = new TmxMapLoader().load("map"  + map + ".tmx");
+        tiledMapRenderer = new OrthogonalTiledMapRenderer(tiledMap);
+
+
+    }
+
     @Override
     public int getWidth() {
+
+
         return ((TiledMapTileLayer) tiledMap.getLayers().get(0)).getWidth();
     }
 
