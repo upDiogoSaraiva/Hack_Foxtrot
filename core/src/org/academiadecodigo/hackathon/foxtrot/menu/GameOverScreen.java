@@ -1,12 +1,11 @@
 package org.academiadecodigo.hackathon.foxtrot.menu;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.Camera;
-import com.badlogic.gdx.graphics.GL20;
-import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.*;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
@@ -25,6 +24,9 @@ public class GameOverScreen implements MenuScreen {
     private TextureAtlas atlas;
     private Texture image;
     private SpriteBatch pictureBatch;
+    private SpriteBatch fontbatch;
+    private BitmapFont font;
+    private Texture texture;
 
     public GameOverScreen(InnerMenus innerMenus) {
         this.innerMenus = innerMenus;
@@ -35,6 +37,7 @@ public class GameOverScreen implements MenuScreen {
     public void init() {
 
         batch = new SpriteBatch();
+        fontbatch = new SpriteBatch();
         atlas = new TextureAtlas("uiskin.atlas");
         skin = new Skin(Gdx.files.internal("uiskin.json"));
         Camera camera = new OrthographicCamera();
@@ -48,6 +51,20 @@ public class GameOverScreen implements MenuScreen {
 
     @Override
     public void show() {
+
+        font = new BitmapFont(Gdx.files.internal("arial.fnt"));
+        fontbatch.begin();
+
+        texture = new Texture(Gdx.files.internal("arial.png"));
+
+        TextureRegion bg = new TextureRegion(texture, 500,500);
+
+
+        fontbatch.draw(texture, 500,500);
+        font.setColor(Color.WHITE);
+        fontbatch.end();
+
+
 
         Gdx.input.setInputProcessor(stage);
         TextButton menu = new TextButton("PlayBack", skin);
@@ -108,6 +125,8 @@ public class GameOverScreen implements MenuScreen {
 
     @Override
     public void dispose() {
+
+        font.dispose();
 
     }
 }

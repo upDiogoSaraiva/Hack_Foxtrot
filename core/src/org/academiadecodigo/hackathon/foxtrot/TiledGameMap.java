@@ -15,6 +15,7 @@ public class TiledGameMap extends GameMap {
     private OrthogonalTiledMapRenderer tiledMapRenderer;
     private OrthographicCamera camera;
     private boolean firstMap = true;
+    public static int score;
 
     public TiledGameMap(InnerMenus innerMenus) {
         super(innerMenus);
@@ -59,6 +60,7 @@ public class TiledGameMap extends GameMap {
         batch.begin();
         super.render(camera, batch);
         batch.end();
+        score++;
 
     }
 
