@@ -28,7 +28,7 @@ public abstract class GameMap {
     public void render(OrthographicCamera camera, SpriteBatch batch) {
 
         entities.get(0).setY(entities.get(1).getY());
-        
+
         for (Entity entity : entities) {
             entity.render(batch);
         }
@@ -47,9 +47,12 @@ public abstract class GameMap {
 
         Entity entity = entities.get(1);
 
+        System.out.println("player: " + entity.getX());
+        System.out.println("coffin: " + entities.get(0).getX());
+
         if (entity.getType().equals(EntityType.PLAYER)) {
 
-            if (entity.isDead()) {
+            if ((entity.getX() <= entities.get(0).getX()) || entity.isDead()) {
                 Gdx.app.exit(); //TODO GAME OVER return to menu
             }
         }
